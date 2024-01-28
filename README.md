@@ -1,3 +1,5 @@
+# psycho-train
+A simple webapp made to serve as training for psychometric assesments. Made with Vue3
 # psycho_train
 
 This template should help get you started developing with Vue 3 in Vite.
