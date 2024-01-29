@@ -10,8 +10,8 @@ COPY ./ ./
 
 RUN npm run build
 
+RUN npm install --global http-server
+
 EXPOSE 8080
 
-CMD ["http.server", "dist"]
-
-ENTRYPOINT ["top", "-b"]
+CMD ["http-server", "dist"]
