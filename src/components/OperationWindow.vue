@@ -39,7 +39,6 @@ import {onMounted, ref} from "vue";
       }
     })
   });
-
     totalQuestions.value = props.questionList.length;
     stopwatch.start();
   //---------
@@ -74,10 +73,10 @@ import {onMounted, ref} from "vue";
     const inputElement = document.querySelector("input");
     user_sol.value = "";
     answerInputClass.value = "wrong-answer";
-
   }
   const submitAnswer = ()=>{
     results.push({
+      "questionNum": currentQuestion.value,
       "expectedResult": props.questionList[currentQuestion.value].getResult(),
       "userResult": user_sol.value,
       "time": stopwatch.stop(),
@@ -94,8 +93,6 @@ import {onMounted, ref} from "vue";
 
   }
 
-
-
   const nextQuestion = ()=>{
     setTimeout(()=>{
       // CHECK IF NUMBER IS NOT IN THE VALID INTERVAL
@@ -103,10 +100,7 @@ import {onMounted, ref} from "vue";
         if (currentQuestion.value < totalQuestions.value - 1) {
           currentQuestion.value++;
           // PLAY NEXT QUESTION SPEECH
-          // const speech = document.getElementById(`speechQuestion-${currentQuestion.value}`)
-          // if(speech) speech.play();
           setTimeout( ()=>audiocomponent.value[0].speak(),500);
-          setTimeout( ()=>console.log(audiocomponent.value),500);
           timerIsFake.value = false;
         // LAST QUESTION
         } else if (currentQuestion.value === totalQuestions.value - 1) {

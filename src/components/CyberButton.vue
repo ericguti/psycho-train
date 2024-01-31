@@ -35,10 +35,11 @@ body {
 }
 
 [class*="btn-glitch-"] {
+  box-sizing: border-box;
   display: block;
   font-family: "VT323", monospace;
   border: 1px solid white;
-  color: white;
+  color: var(--color-text);
   padding: 10px 13px;
   min-width: 175px;
   line-height: 1.5em;

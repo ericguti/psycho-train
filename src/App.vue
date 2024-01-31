@@ -8,8 +8,9 @@ import OperationWindow from "@/components/OperationWindow.vue";
 <template>
   <header>
     <img alt="Vue logo" class="logo" src="./assets/logo.svg" width="25" height="25" />
-    <p style="text-align: center">ERICGUTI SOFTWARE INDUSTRIES</p>
-    <h1 class="h1-main">PSYCOTECHNICS PREPARATION</h1>
+    <p style="text-align: center">ERICGUTI HUA SOFTWARE</p>
+    <h1 class="h1-main">Psychometrics training</h1>
+<!--    <h1 class="h1-main">Hua<span class="thick">films</span></h1>-->
   </header>
   <main>
     <ContentView></ContentView>
@@ -23,10 +24,14 @@ header {
 
 .logo {
   display: block;
-  margin: 0 auto 2rem;
+  margin: 0 auto;
 }
 .h1-main{
   text-align: center;
+  //font-family: BHRegular;
+}
+.thick{
+  font-family: BHBlack;
 }
 
 ul{

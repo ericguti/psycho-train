@@ -5,25 +5,21 @@
   import OperationWindow from "@/components/OperationWindow.vue";
   import {SimpleOperation, NumberGuesser} from "@/services/operation.js";
   import CyberButton from "@/components/CyberButton.vue";
+  import NumQuestionsSelector from "@/components/NumQuestionsSelector.vue";
 
   // PAGE VARIABLES
   const currentWindow = ref(0);
   const opa=ref("");
   const $toast = useToast();
 
-  const customNumOfQuestions = ref(5);
+  const customNumOfQuestions = ref();
 
   const getAverageTime = ()=>{
     let acc=0; let cnt=0; for(let a of opa.value){ acc+=a.time; cnt++; }return acc/cnt;
   }
-  function getAverage(aaa){
-    let acc=0; let cnt=0;
-    for (res of aaa){
-      if(res["expectedResult"] === res["userResult"]){
-        acc+=res["time"];
-        cnt++;
-      }
-    }
+  const getTotalTime = (res) =>{
+    if(!res) return 0;
+    return opa.value.reduce( (acc, cur)=>{return acc+cur.time}, 0)
   }
 
   class ExcersiseList{
@@ -71,9 +67,10 @@
   <cyber-button text="Menu" @click="()=>{currentWindow=0;exc_list = [];}"></cyber-button>
   <div v-if="currentWindow===0" class="main-menu">
     <h3>Choose the number of questions</h3>
-    <input type="number" v-model="customNumOfQuestions">
-    <h3> ------ </h3>
-<!--    <span>Number of questions</span><input v-model="">-->
+    <NumQuestionsSelector
+      @updateInput="(new_value)=>{customNumOfQuestions=new_value}"
+    ></NumQuestionsSelector>
+<!--    buttons-->
     <button class="cybr-btn" @click="()=>{start_excersises(0,customNumOfQuestions)}">
       Sum<span aria-hidden>_</span>
       <span aria-hidden class="cybr-btn__glitch">Sum</span>
@@ -106,7 +103,7 @@
     Results:
       {{opa}}
       Average time: {{getAverageTime()}}
-      Total time:
+      Total time: {{getTotalTime(opa)}}
   </div>
 </template>
 

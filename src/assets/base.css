@@ -1,5 +1,6 @@
 @import url("https://fonts.googleapis.com/css2?family=VT323&display=swap");
-
+@font-face { font-family: "BHBlack"; src: url("https://files.cargocollective.com/c874660/visuelt_black-web.woff") format("woff"); font-style: normal; font-weight: normal; }
+@font-face { font-family: "BHRegular"; src: url("https://files.cargocollective.com/c874660/visuelt_regular-web.woff") format("woff"); font-style: normal; font-weight: normal; }
 /* color palette from <https://github.com/vuejs/theme> */
 :root {
   --vt-c-white: #ffffff;
