@@ -109,6 +109,7 @@ input[type=number] {
 
 .caretHid{
   margin: 0;
+  position: absolute;
 }
 
 .caret{

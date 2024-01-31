@@ -103,7 +103,7 @@ import {onMounted, ref} from "vue";
           setTimeout( ()=>audiocomponent.value[0].speak(),500);
           timerIsFake.value = false;
         // LAST QUESTION
-        } else if (currentQuestion.value === totalQuestions.value - 1) {
+        } else if (currentQuestion.value === totalQuestions.value -1) {
           const end_audio = document.getElementById("finish-audio");
           if (end_audio) end_audio.play();
           setTimeout(()=>emit("finishedQuestions", results), 1000);
@@ -122,8 +122,9 @@ import {onMounted, ref} from "vue";
 </script>
 
 <template>
-  <ul>
-    <li v-for="(nthquestion, key) in props.questionList">
+  <div class="op-window-wrapper">
+  <div v-if="currentQuestion >=0 " class="op-window">
+    <div class="player" v-for="(nthquestion, key) in props.questionList">
       <text-to-speech
           v-if="key===currentQuestion"
           ref="audiocomponent"
@@ -132,9 +133,7 @@ import {onMounted, ref} from "vue";
           :playbackspeed="0.75"
           :question="props.questionList[currentQuestion]"
       ></text-to-speech>
-    </li>
-  </ul>
-  <div v-if="currentQuestion >=0 " class="op-window">
+    </div>
     <audio id="finish-audio" src="https://www.myinstants.com/media/sounds/the-weeknd-rizzz.mp3"></audio>
     <audio id="correct-audio" src="https://www.myinstants.com/media/sounds/rizz-sounds.mp3"></audio>
     <h2>Question {{currentQuestion+1}} of {{totalQuestions}}</h2>
@@ -152,8 +151,7 @@ import {onMounted, ref} from "vue";
         @click="submitAnswer()" class="sol-button"
     >Check</button>
   </div>
-  <div v-else>
-    <button @click="nextQuestion()">Start test</button>
+  <button class="start" v-if="currentQuestion===-1" @click="nextQuestion()">Start test</button>
   </div>
 </template>
 
@@ -163,6 +161,12 @@ import {onMounted, ref} from "vue";
   }
   .correct-answer{
     border: solid green 2px;
+  }
+  .op-window-wrapper{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 50vh;
   }
   .op-window{
     //border: solid white 1px;
@@ -182,5 +186,17 @@ import {onMounted, ref} from "vue";
   ol,ul{
     list-style-type: none ;
   }
+  .player{
+    margin: 3em 0;
+  }
 
+  .start{
+    all: unset;
+    border: 1.5px solid white;
+    padding: 5px 15px;
+  }
+  .start:hover{
+    background: white;
+    color: black;
+  }
 </style>

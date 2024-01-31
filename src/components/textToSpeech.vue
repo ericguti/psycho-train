@@ -22,6 +22,8 @@
       type: Object
     }
   })
+
+  const showTranscription = ref(false);
   function speak(text) {
     if (props.enableai && props.audioLink) {
       let audioElement = document.getElementById("audio");
@@ -42,9 +44,9 @@
 <template>
   <audio id="audio" :src="props.audioLink"></audio>
   <button @click="speak('hola mundo')">speak</button>
-  <p>{{question.getEnglishText()}}</p>
+  <input type="checkbox" name="transcription-cb" id="transcription-cb" v-model="showTranscription">
+  <p :style="`visibility: ${showTranscription? 'show': 'hidden'}`">{{question.getEnglishText()}}</p>
 </template>
 
 <style scoped>
-
 </style>
