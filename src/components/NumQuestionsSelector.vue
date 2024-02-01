@@ -67,18 +67,24 @@ input{
   background: none;
   color: rgba(30, 28, 34, 0);
   position: absolute;
+  top: -99999px;
+  height: 1px;
+  width: 1px;
+  margin: -1px;
+  clip: rect(0 0 0 0);
+  padding: 0;
 }
 .input, .input-focus{
   display: flex;
   align-items: center;
   justify-content: center;
   background: none;
-  height: 1.8em;
-  width: 300px;
+  height: 2em;
+  width: 270px;
   color: var(--color-text);
   text-align: center;
   box-shadow: none;
-  border: 1px solid white;
+  border: 1.5px solid white;
   transition: 0.7s;
   overflow: clip;
 }
@@ -136,7 +142,7 @@ button{
   font-weight: bold;
   padding: 0;
   background: none;
-  border: 1.2px solid white;
+  border: 1.5px solid white;
   border-radius: 100%;
   color: var(--color-text);
   transition: 0.5s;

@@ -58,23 +58,27 @@
   }
   const exc_list = ref([]);
   async function start_excersises(type, num_questions){
-    try{
-      let ec = new ExcersiseList(type, num_questions);
-      console.log(ec);
-      // GENERATE SPEECH FROM API SEQ/CONCURRENT
-      // const promiseArray = [];
-      // for (let q of ec.questionList) {
-      //   try{
-      //     await q.generateSpeech();
-      //   }catch (e){
-      //     $toast.error("Error generating speech for: " + q);
-      //   }
-      // }
-      // await Promise.all(promiseArray);
-      exc_list.value.push(...ec.questionList);
-      currentWindow.value = 2;
-    }catch (e){
-      console.error(e);
+    if(! ( Number(num_questions) <= 0 || Number(num_questions) > 1000) ){
+      try{
+        let ec = new ExcersiseList(type, num_questions);
+        console.log(ec);
+        // GENERATE SPEECH FROM API SEQ/CONCURRENT
+        // const promiseArray = [];
+        // for (let q of ec.questionList) {
+        //   try{
+        //     await q.generateSpeech();
+        //   }catch (e){
+        //     $toast.error("Error generating speech for: " + q);
+        //   }
+        // }
+        // await Promise.all(promiseArray);
+        exc_list.value.push(...ec.questionList);
+        currentWindow.value = 2;
+      }catch (e){
+        console.error(e);
+      }
+    }else {
+      $toast.error("Number of questions must be between 1 and 1000");
     }
   }
 </script>
@@ -161,25 +165,11 @@
   padding: 5%;
 }
 
-* {
-  box-sizing: border-box;
-}
 
-body {
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  justify-content: center;
-  min-height: 100vh;
-  font-family: 'Cyber', sans-serif;
-  background: linear-gradient(90deg, #f5ed00 70%, #e6de00 70%), #fff700;
-}
 
-body .cybr-btn + .cybr-btn {
-  margin-top: 2rem;
-}
 
 .cybr-btn {
+  margin: 10px;
   --primary: hsl(var(--primary-hue), 85%, calc(var(--primary-lightness, 50) * 1%));
   --shadow-primary: hsl(var(--shadow-primary-hue), 90%, 50%);
   --primary-hue: 0;
@@ -211,7 +201,7 @@ body .cybr-btn + .cybr-btn {
   position: relative;
   font-weight: 700;
   border: 0;
-  min-width: 300px;
+  min-width: 260px;
   height: 75px;
   line-height: 75px;
   transition: background 0.2s;
@@ -349,6 +339,9 @@ body .cybr-btn + .cybr-btn {
 
 .cybr-btn:nth-of-type(2) {
   --primary-hue: 260;
+}
+.cybr-btn:nth-of-type(3) {
+  --primary-hue: 050;
 }
 
 </style>

@@ -55,3 +55,7 @@ input[type="text"]{
 h1{
   font-size: 36px;
 }
+
+.v-toast{
+  text-align: center;
+}
