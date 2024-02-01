@@ -42,11 +42,33 @@
 </script>
 
 <template>
+  <div class="wrapper">
   <audio id="audio" :src="props.audioLink"></audio>
-  <button @click="speak('hola mundo')">speak</button>
-  <input type="checkbox" name="transcription-cb" id="transcription-cb" v-model="showTranscription">
-  <p :style="`visibility: ${showTranscription? 'show': 'hidden'}`">{{question.getEnglishText()}}</p>
+  <button @click="speak('hola mundo')">Speak again</button>
+    <p :style="`visibility: ${showTranscription? 'show': 'hidden'}`">{{question.getEnglishText()}}</p>
+  <div class="inp-wrapper">
+    <input type="checkbox" id="transcription-cb" v-model="showTranscription">
+    <label for="transcription-cb"> -> Show transcription</label>
+  </div>
+  </div>
+
 </template>
 
 <style scoped>
+.wrapper{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+button{
+  width: 100px;
+}
+input[type="checkbox"]{
+  margin-right: 5px;
+}
+.inp-wrapper{
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
 </style>

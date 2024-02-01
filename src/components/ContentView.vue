@@ -9,17 +9,34 @@
 
   // PAGE VARIABLES
   const currentWindow = ref(0);
-  const opa=ref("");
+  const opa=ref([]);
   const $toast = useToast();
 
-  const customNumOfQuestions = ref();
+  const customNumOfQuestions = ref(5);
 
-  const getAverageTime = ()=>{
-    let acc=0; let cnt=0; for(let a of opa.value){ acc+=a.time; cnt++; }return acc/cnt;
-  }
-  const getTotalTime = (res) =>{
-    if(!res) return 0;
-    return opa.value.reduce( (acc, cur)=>{return acc+cur.time}, 0)
+
+  const user_results = ref();
+  class UserResults{
+    opa = [];
+    constructor(user_results) {
+      this.opa = user_results;
+    }
+    getAverageTime(){
+      let acc=0; let cnt=0;
+      const filtered = this.opa.filter((a)=>a["expectedResult"]===a["userResult"])
+      for(let a of filtered) {
+        acc+=a.time; cnt++;
+      }
+      return acc/cnt;
+    }
+    getTotalTime(){
+      if(!this.opa) return 0;
+      return this.opa.reduce( (acc, cur)=>{return acc+cur.time}, 0)
+    }
+    getWrongNumber(){
+      return this.opa.filter( (a)=>a["expectedResult"]!==a["userResult"] ).length;
+    }
+
   }
 
   class ExcersiseList{
@@ -44,16 +61,15 @@
     try{
       let ec = new ExcersiseList(type, num_questions);
       console.log(ec);
-
-      const promiseArray = [];
-      for (let q of ec.questionList) {
-        try{
-          await q.generateSpeech();
-        }catch (e){
-          $toast.error("Error generating speech for: " + q);
-        }
-      }
-
+      // GENERATE SPEECH FROM API SEQ/CONCURRENT
+      // const promiseArray = [];
+      // for (let q of ec.questionList) {
+      //   try{
+      //     await q.generateSpeech();
+      //   }catch (e){
+      //     $toast.error("Error generating speech for: " + q);
+      //   }
+      // }
       // await Promise.all(promiseArray);
       exc_list.value.push(...ec.questionList);
       currentWindow.value = 2;
@@ -64,7 +80,9 @@
 </script>
 
 <template>
-  <cyber-button text="Menu" @click="()=>{currentWindow=0;exc_list = [];}"></cyber-button>
+  <div class="wrapper">
+  <button class="menu-bttn" @click="()=>{currentWindow=0;exc_list = [];}">= Menu</button>
+<!--<cyber-button text="Menu" @click="()=>{currentWindow=0;exc_list = [];}"></cyber-button>-->
   <div v-if="currentWindow===0" class="main-menu">
     <h3>Choose the number of questions</h3>
     <NumQuestionsSelector
@@ -88,26 +106,40 @@
     </button>
   </div>
   <div v-if="currentWindow===1">Test{{opa}}</div>
-  <div v-if="currentWindow===2">
+  <div v-if="currentWindow===2" class="main-menu">
     <OperationWindow
         :question-list="exc_list"
         @finishedQuestions="(i)=>{
           currentWindow=3;
-          opa=i;
-          getAverageTime();
+          user_results = new UserResults(i)
           exc_list = [];
         }"
     ></OperationWindow>
   </div>
-  <div v-if="currentWindow===3">
+  <div v-if="currentWindow===3" class="results">
+    <h1>Results</h1>
+    <h3>total time</h3>
+    <h2>{{user_results.getTotalTime()/1000}} s</h2>
+    <h3>average time</h3>
+    <h2 style="color: greenyellow">{{user_results.getAverageTime()/1000}} s</h2>
+    <h3>wrong answers</h3>
+    <h2 style="color: red">{{user_results.getWrongNumber()}}</h2>
     Results:
-      {{opa}}
-      Average time: {{getAverageTime()}}
-      Total time: {{getTotalTime(opa)}}
+      {{user_results.opa}}
+  </div>
   </div>
 </template>
 
 <style scoped>
+.wrapper{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px 0;
+}
+.menu-bttn{
+  width: 60px;
+}
 .main-menu{
   display: flex;
   flex-direction: column;
@@ -119,6 +151,14 @@
   font-family: Cyber;
   src: url("https://assets.codepen.io/605876/Blender-Pro-Bold.otf");
   font-display: swap;
+}
+
+.results{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  padding: 5%;
 }
 
 * {

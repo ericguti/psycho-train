@@ -33,3 +33,25 @@ a,
     grid-template-columns: 1fr 1fr;
   }
 }
+
+button{
+  all: unset;
+  text-align: center;
+  border: 1.5px solid var(--color-text);
+  transition: 0.8s;
+  padding: 0 5px;
+}
+button:hover{
+  background: white;
+  color: black;
+  transition: 0.8s;
+}
+input[type="text"]{
+  all: unset;
+  background: none;
+  border: 1.25px solid var(--color-text);
+}
+
+h1{
+  font-size: 36px;
+}

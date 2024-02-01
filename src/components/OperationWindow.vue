@@ -78,7 +78,7 @@ import {onMounted, ref} from "vue";
     results.push({
       "questionNum": currentQuestion.value,
       "expectedResult": props.questionList[currentQuestion.value].getResult(),
-      "userResult": user_sol.value,
+      "userResult": Number(user_sol.value),
       "time": stopwatch.stop(),
     })
     // CORRECT ANSWER
@@ -124,8 +124,12 @@ import {onMounted, ref} from "vue";
 <template>
   <div class="op-window-wrapper">
   <div v-if="currentQuestion >=0 " class="op-window">
-    <div class="player" v-for="(nthquestion, key) in props.questionList">
+    <h1>Question {{currentQuestion+1}} of {{totalQuestions}}</h1>
+    <h3 class="stopwatch
+">{{timerIsFake? fakeTimer: currentTimer}}</h3>
+    <div  v-for="(nthquestion, key) in props.questionList">
       <text-to-speech
+          class="player"
           v-if="key===currentQuestion"
           ref="audiocomponent"
           :audio-link="'https://www.myinstants.com/media/sounds/the-weeknd-rizzz.mp3'"
@@ -136,8 +140,6 @@ import {onMounted, ref} from "vue";
     </div>
     <audio id="finish-audio" src="https://www.myinstants.com/media/sounds/the-weeknd-rizzz.mp3"></audio>
     <audio id="correct-audio" src="https://www.myinstants.com/media/sounds/rizz-sounds.mp3"></audio>
-    <h2>Question {{currentQuestion+1}} of {{totalQuestions}}</h2>
-    <h3>{{timerIsFake? fakeTimer: currentTimer}}</h3>
 <!--    <h3>{{props.questionList[currentQuestion].toString()}}</h3>-->
     <!--
     AUDIO ITEMS PER EXCERSISE
@@ -164,13 +166,25 @@ import {onMounted, ref} from "vue";
   }
   .op-window-wrapper{
     display: flex;
-    justify-content: center;
     align-items: center;
+    justify-content: center;
     min-height: 50vh;
+    width: 60%;
   }
+  @media only screen and (max-width: 767px) {
+    .op-window-wrapper{
+      width: 100%;
+    }
+  }
+
+  .stopwatch{
+  }
+
   .op-window{
-    //border: solid white 1px;
     padding: 5px 5px 5px 5px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
   }
   #user-sol{
     background-color: #303245;
@@ -187,7 +201,7 @@ import {onMounted, ref} from "vue";
     list-style-type: none ;
   }
   .player{
-    margin: 3em 0;
+    margin: 1em 0;
   }
 
   .start{
@@ -198,5 +212,8 @@ import {onMounted, ref} from "vue";
   .start:hover{
     background: white;
     color: black;
+  }
+  .sol-button{
+    margin-top: 10px;
   }
 </style>
