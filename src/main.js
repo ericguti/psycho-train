@@ -60,15 +60,15 @@ const messages = {
             menu: "选页",
             sum: "加",
             substract: "减",
-            numberguesser: ""
+            numberguesser: "猜数字"
         },
         operationwindow: {
-            questionnumber: "",
-            check: "",
+            questionnumber: "题目",
+            check: "检验",
         },
         texttospeech: {
-            speakagain: "",
-            showtranscription: "",
+            speakagain: "重播",
+            showtranscription: "显示字幕",
         },
     }
 }
