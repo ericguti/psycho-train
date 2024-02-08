@@ -6,6 +6,14 @@
   import {SimpleOperation, NumberGuesser} from "@/services/operation.js";
   import CyberButton from "@/components/CyberButton.vue";
   import NumQuestionsSelector from "@/components/NumQuestionsSelector.vue";
+  import {useI18n} from "vue-i18n";
+
+
+  // I18N
+  const t = ref();
+  const locale = ref();
+  t.value = useI18n().t;
+  locale.value = useI18n().locale
 
   // PAGE VARIABLES
   const currentWindow = ref(0);
@@ -85,26 +93,28 @@
 
 <template>
   <div class="wrapper">
-  <button class="menu-bttn" @click="()=>{currentWindow=0;exc_list = [];}">= Menu</button>
+  <button
+      class="menu-bttn" @click="()=>{currentWindow=0;exc_list = [];}"
+  >= {{t("contentview.menu")}}</button>
 <!--<cyber-button text="Menu" @click="()=>{currentWindow=0;exc_list = [];}"></cyber-button>-->
   <div v-if="currentWindow===0" class="main-menu">
-    <h3>Choose the number of questions</h3>
+    <h3>{{t("contentview.choosequestionnumber")}}</h3>
     <NumQuestionsSelector
       @updateInput="(new_value)=>{customNumOfQuestions=new_value}"
     ></NumQuestionsSelector>
 <!--    buttons-->
     <button class="cybr-btn" @click="()=>{start_excersises(0,customNumOfQuestions)}">
-      Sum<span aria-hidden>_</span>
+      {{t("contentview.sum")}}<span aria-hidden>_</span>
       <span aria-hidden class="cybr-btn__glitch">Sum</span>
       <span aria-hidden class="cybr-btn__tag"></span>
     </button>
     <button class="cybr-btn" @click="()=>{start_excersises(1, customNumOfQuestions)}">
-      Substract<span aria-hidden>_</span>
+      {{t("contentview.substract")}}<span aria-hidden>_</span>
       <span aria-hidden class="cybr-btn__glitch">Sum</span>
       <span aria-hidden class="cybr-btn__tag"></span>
     </button>
     <button class="cybr-btn" @click="()=>{start_excersises(4,customNumOfQuestions)}">
-      Number Guesser<span aria-hidden>_</span>
+      {{t("contentview.numberguesser")}}<span aria-hidden>_</span>
       <span aria-hidden class="cybr-btn__glitch">Sum</span>
       <span aria-hidden class="cybr-btn__tag"></span>
     </button>

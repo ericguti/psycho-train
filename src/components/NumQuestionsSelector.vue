@@ -16,10 +16,6 @@ import {onMounted, ref} from "vue";
       }, false
     )
   })
-  function changeInput(newValue){
-    numQ.value = newValue;
-    emit("updateInput", numQ.value);
-  }
 
   function focusInput(){
     const realinput = document.getElementById('realinput');
@@ -28,6 +24,16 @@ import {onMounted, ref} from "vue";
     }
     caretClass.value = "caret";
     inputDivClass.value = "input-focus"
+  }
+  function moveCaretToEnd(inputElement) {
+    if (!inputElement) return;
+    const inputLength = inputElement.value.length;
+    inputElement.setSelectionRange(inputLength, inputLength);
+  }
+  function changeInput(target){
+    moveCaretToEnd();
+    numQ.value = target.value;
+    emit("updateInput", numQ.value);
   }
 
 defineExpose({
@@ -47,7 +53,7 @@ defineExpose({
     </div>
     <button id="inc" @click="changeInput(Number(numQ)+1)">&gt;</button>
   </div>
-  <input id="realinput" :value="numQ" @input="changeInput($event.target.value)" type="number">
+  <input id="realinput" :value="numQ" @input="changeInput($event.target)" type="number">
 </template>
 
 <style scoped>

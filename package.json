@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "vue": "^3.3.11",
+    "vue-i18n": "^9.9.1",
     "vue-toast-notification": "^3.1.2"
   },
   "devDependencies": {

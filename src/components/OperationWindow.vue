@@ -6,6 +6,12 @@ import {onMounted, ref} from "vue";
   import {Stopwatch} from "@/services/timer";
   import textToSpeech from "@/components/textToSpeech.vue";
 
+  import {useI18n} from "vue-i18n";
+  const t = ref();
+  const locale = ref();
+  t.value = useI18n().t;
+  locale.value = useI18n().locale;
+
   const user_sol=ref("")
 
   const currentQuestion=ref(-1)
@@ -124,7 +130,7 @@ import {onMounted, ref} from "vue";
 <template>
   <div class="op-window-wrapper">
   <div v-if="currentQuestion >=0 " class="op-window">
-    <h1>Question {{currentQuestion+1}} of {{totalQuestions}}</h1>
+    <h1>{{t("operationwindow.questionnumber")}} {{currentQuestion+1}}/{{totalQuestions}}</h1>
     <h3 class="stopwatch
 ">{{timerIsFake? fakeTimer: currentTimer}}</h3>
     <div  v-for="(nthquestion, key) in props.questionList">
@@ -151,7 +157,7 @@ import {onMounted, ref} from "vue";
     >
     <button
         @click="submitAnswer()" class="sol-button"
-    >Check</button>
+    >{{t("operationwindow.check")}}</button>
   </div>
   <button class="start" v-if="currentQuestion===-1" @click="nextQuestion()">Start test</button>
   </div>
